@@ -5,12 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Icons</title>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bbootstrap 4 -->
+    <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="../../plugins/jqvmap/jqvmap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -797,20 +810,34 @@
     <!-- /.sidebar -->
   </aside>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Icons</h1>
+                <!-- SEARCH FORM -->
+               
           </div>
+        
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Icons</li>
+              <li class="breadcrumb-item active">Add Sale</li>
             </ol>
+          </div>
+        </div>
+        <div class="row pl-5">
+        <div class="col-md-2">
+              &nbsp;
+          </div>
+          <div class="col-md-8">
+              <label>Search for A Product:</label>
+              <input class="form-control" type="text" id="suggestion_textbox" name="suggestion_textbox"/>
+          </div>
+          <div class="col-md-2">
+              &nbsp;
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -819,20 +846,158 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <div class="card card-primary card-outline">
-          <div class="card-header">
-            <h3 class="card-title">Icons</h3>
-          </div> <!-- /.card-body -->
-          <div class="card-body">
-            <p>You can use any font library you like with AdminLTE 3.</p>
-            <strong>Recommendations</strong>
-            <div>
-              <a href="https://fontawesome.com/">Font Awesome</a><br>
-              <a href="https://useiconic.com/open/">Iconic Icons</a><br>
-              <a href="https://ionicons.com/">Ion Icons</a><br>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Sale Products List</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered table-responsive">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Quantity</th>
+                      <th>Price</th>
+                      <th>Subtotal</th>
+                      <th>Tax</th>
+                      <th>Total</th>
+                      <th>Remove</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Solar Panellllllllllllll</td>
+                      <td><input type="text" name="qty" id="qty" size="5" value="1"></td>
+                      <td><span style="font-weight: 600;">Ksh. </span>9,000</td>
+                      <td><span style="font-weight: 600;">Ksh. </span>9,000</td>
+                      <td><span style="font-weight: 600;">Ksh. </span>900</td>
+                      <td><span style="font-weight: 600;">Ksh. </span>18,900</td>
+                      <td><a href=""><i class="fas fa-trash-alt"></i></a></td>
+                    </tr>
+                    <tr>
+                      <td>Solar Panellllllllllllll</td>
+                      <td><input type="text" name="qty" id="qty" size="5" value="1"></td>
+                      <td><span style="font-weight: 600;">Ksh. </span>9,000</td>
+                      <td><span style="font-weight: 600;">Ksh. </span>9,000</td>
+                      <td><span style="font-weight: 600;">Ksh. </span>900</td>
+                      <td><span style="font-weight: 600;">Ksh. </span>18,900</td>
+                      <td><a href=""><i class="fas fa-trash-alt"></i></a></td>
+                    </tr>
+                    <tr>
+                      <td>Solar Panellllllllllllll</td>
+                      <td><input type="text" name="qty" id="qty" size="5" value="1"></td>
+                      <td><span style="font-weight: 600;">Ksh. </span>9,000</td>
+                      <td><span style="font-weight: 600;">Ksh. </span>9,000</td>
+                      <td><span style="font-weight: 600;">Ksh. </span>900</td>
+                      <td><span style="font-weight: 600;">Ksh. </span>18,900</td>
+                      <td><a href=""><i class="fas fa-trash-alt"></i></a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div><!-- /.card-body -->
+            <!-- /.card -->
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-header">
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td style="font-weight: 600;">Date</td>
+                      <td></td>
+                      <td>
+                        <?php echo date('Y-m-d'); ?>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 600;">Clerk</td>
+                      <td></td>
+                      <td>
+                        Wilson
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 600;">Till</td>
+                      <td></td>
+                      <td>
+                        Till2
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 600;">Subtotal</td>
+                      <td></td>
+                      <td>
+                        Ksh 8000
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 600;">Discount</td>
+                      <td></td>
+                      <td>
+                        Ksh 800
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 600;">Tax</td>
+                      <td></td>
+                      <td>
+                        Ksh 80
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 600;">Shipping</td>
+                      <td></td>
+                      <td>
+                        Ksh 80000
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 600;">Total</td>
+                      <td></td>
+                      <td>
+                        Ksh 80,000
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"></h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table class="table table-striped">
+                  <tbody>
+                    <tr class="text-uppercase">
+                      <td><button style="height: 60px;" class="btn btn-primary btn-lg" type="submit"><i class="fas fa-print table-responsive"> Print</i></button></td>
+                      <td><button style="height: 60px;" type="submit" name="reset" class="btn btn-primary btn-primary btn-lg">Reset</button></td>
+                      <td><button style="height: 60px;" type="submit" class="btn btn-primary btn-lg" name="save">Save</button></td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
         </div>
+        <!-- /.row -->
+        <!-- /.row -->
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
@@ -861,5 +1026,38 @@
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
+<script src="js/jquery.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script>
+
+    $(document).ready(function(e){
+
+        $("#suggestion_textbox").autocomplete({
+            source:'search.php'
+        });
+
+        $('#suggestion_textbox').on('keypress', function(e) {
+            var code = e.keyCode || e.which;
+            if(code==13){
+                e.preventDefault();
+                let name = $("#suggestion_textbox").val();
+                window.location.href = "invoice_create.php?page=products&action=add&name="+name;
+            }
+        });
+
+    });
+
+    $(".alert:not(.dont-close)").fadeTo(8000, 500).slideUp(500, function(){
+        $(".alert:not(.dont-close)").slideUp(500);
+    });
+
+    <?php
+    if (isset($_SESSION['dont_close_alert'])){ ?>
+        $('button#print').trigger('click');
+    <?php unset($_SESSION['dont_close_alert']); }
+    ?>
+</script>
 </body>
 </html>

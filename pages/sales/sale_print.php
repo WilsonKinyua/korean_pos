@@ -37,7 +37,7 @@ $invoice = $res->fetch_assoc();
                 <table>
                     <tr>
                         <td class="title">
-                            <span class="t-invoice"></span>
+                            <span class="t-invoice"><img style="width: 250px;" src="../../dist/img/logo.jpg" alt="Logo Company"></span>
                         </td>
 
                         <td>

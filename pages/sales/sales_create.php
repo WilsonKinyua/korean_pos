@@ -178,12 +178,12 @@ include __DIR__ . '/../partials/head.php';
                         </div>
                         <div class="col-md-4">
                         <label for="">Payment Type: </label>
-                          <select class="form-control" name="payment_type">
+                          <select class="form-control" name="payment_type" required>
                             <option value="">Select an option</option>
                             <?php
                             $py = $conn->query('SELECT * FROM `payment_types`') or die($conn->error);
                             while ($row = $py->fetch_assoc()) { ?>
-                              <option value="<?= $row['id'] ?>"><?= $row['name'] ?></option>
+                              <option value="<?= $row['name'] ?>"><?= $row['name'] ?></option>
                             <?php }
                             ?>
                           </select>
@@ -307,7 +307,7 @@ include __DIR__ . '/../partials/head.php';
                         </div>
                         <div class="col-md-5">
                           <label for="">Amount Paid</label>
-                          <input type="text" name="amount" value="" class="form-control" placeholder="Amount paid in KES e.g. 20000">
+                          <input type="text" name="amount" value="" class="form-control" placeholder="Amount paid in KES e.g. 20000" required>
                         </div>
                       </div>
                       <div class="row col-md-12">&nbsp;</div>

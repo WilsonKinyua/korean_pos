@@ -302,8 +302,8 @@ if(isset($_POST['save_sale'])){
 		$price = $values['price'];
 		$line_amount = $values['quantity'] * $values['price'];
 
-		$conn->query("INSERT INTO `sales`(`tran_date`, `product`, `reference`, `sub_total`, `code`, `amount_paid`,`salesman_id`, `price`,`qty`) 
-                                      VALUES ('$date','$product','$doc_number','$line_amount',0,'$amount','$user','$price','$qty')") or die($conn->error);
+		$conn->query("INSERT INTO `sales`(`tran_date`, `product`, `reference`, `sub_total`, `code`, `amount_paid`,`salesman_id`, `price`,`qty`,`payment_type`) 
+                                      VALUES ('$date','$product','$doc_number','$line_amount',0,'$amount','$user','$price','$qty','$payment_type')") or die($conn->error);
 	}
 	
 

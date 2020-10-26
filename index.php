@@ -218,35 +218,9 @@ if (!isset($_SESSION['group'])) {
         <?php }
         
         if (!($row["receive_stock"] == 0)){?>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-shopping-cart"></i>
-              <p>
-                Purchases
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="pages/purchases/list.php" class="nav-link">
-                  <i class="fas fa-list nav-icon"></i>
-                  <p>List Purchases</p>
-                </a>
-              </li>
-			  <?php } if (!($row["receive_stock"] == 0)){ ?>  
-              <li class="nav-item">
-                <a href="pages/purchases/purchases_create.php" class="nav-link">
-                  <i class="fas fa-plus-circle nav-icon"></i>
-                  <p>Add Purchase</p>
-                </a>
-              </li>
-        
-
-            </ul>
-          </li>
         <?php }
         
-        if (!($row["issue_stock"] == 0)) {?>
+        if (!($row["make_sales"] == 0)) {?>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-store"></i>
@@ -256,20 +230,21 @@ if (!isset($_SESSION['group'])) {
               </p>
             </a>
             <ul class="nav nav-treeview"> 
-              <?php if (!($row["issue_stock"] == 0)){ ?>
+              <?php if (!($row["make_sales"] == 0)){ ?>
               <li class="nav-item">
                 <a href="pages/sales/sales_create.php" class="nav-link">
                   <i class="fas fa-shipping-fast nav-icon"></i>
                   <p>Create Sales</p>
                 </a>
               </li>
+              <?php if (!($row["manage_categories"] == 0)){ ?>
               <li class="nav-item">
                 <a href="pages/sales/sales_list.php" class="nav-link">
                   <i class="fas fa-list nav-icon"></i>
                   <p>List Sales</p>
                 </a>
               </li>
-            <?php } if (!($row["clear_sales"] == 0)){ ?>
+            <?php } } if (!($row["clear_sales"] == 0)){ ?>
             <?php } if (!($row["clear_sales"] == 0)){ ?>
             <?php } ?>
             </ul>

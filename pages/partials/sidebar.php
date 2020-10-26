@@ -121,30 +121,7 @@
                         </ul>
                     </li>
                 <?php }if (!($row["receive_stock"] == 0)){?>
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-shopping-cart"></i>
-                            <p>
-                                Purchases
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="../purchases/list.php" class="nav-link">
-                                    <i class="fas fa-list nav-icon"></i>
-                                    <p>List Purchases</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../purchases/purchases_create.php" class="nav-link">
-                                    <i class="fas fa-plus-circle nav-icon"></i>
-                                    <p>Add Purchase</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                <?php }if (!($row["issue_stock"] == 0 )){?>
+                <?php }if (!($row["make_sales"] == 0 )){?>
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-store"></i>
@@ -154,13 +131,14 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-							<?php if (!($row["issue_stock"] == 0)){ ?>
+							<?php if (!($row["make_sales"] == 0)){ ?>
                                 <li class="nav-item">
                                     <a href="../sales/sales_create.php" class="nav-link">
                                         <i class="fas fa-shipping-fast nav-icon"></i>
                                         <p>Create Sale</p>
                                     </a>
                                 </li>
+                                <?php if (!($row["manage_categories"] == 0)){ ?>
                                 <li class="nav-item">
                                     <a href="../sales/sales_list.php" class="nav-link">
                                         <i class="fas fa-list nav-icon"></i>
@@ -170,7 +148,7 @@
                             <?php } if (!($row["clear_sales"] == 0)){ ?>
                             <?php } if (!($row["clear_sales"] == 0)){ ?>
  							
-                            <?php } ?>
+                            <?php } } ?>
                         </ul>
 					 <?php if (!($row["adjust_stock"] == 0)){ ?>
                 <?php } }?>

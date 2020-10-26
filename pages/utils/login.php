@@ -27,7 +27,7 @@ if (isset($_POST['sign_in'])) {
     
 	}
 
-	$res = $conn->query("SELECT * FROM users WHERE userId='$userId' ") or die($conn->error);
+	$res = $conn->query("SELECT * FROM users WHERE username='$userId' ") or die($conn->error);
 	if (mysqli_num_rows($res) == 1) {
 		$row = $res->fetch_assoc();
     $hashed_password = $row['password'];
@@ -78,14 +78,14 @@ if (isset($_POST['sign_in'])) {
 
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="index.php" class="h1"><b>Korean Kenya </b> Solar</a>
+      <a href="login.php" class="h1"><b>Korean Kenya </b> Solar</a>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Sign in to access your account</p>
     
       <form method="post" id="loginForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="userId" name="userId" required>
+          <input type="text" class="form-control" placeholder="Enter username" name="userId" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -94,7 +94,7 @@ if (isset($_POST['sign_in'])) {
         </div>
         <span style="color: red;"><?php echo $user_id; ?></span>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password" name="password">
+          <input type="password" class="form-control" placeholder="Enter Password" name="password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>

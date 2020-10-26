@@ -61,26 +61,6 @@ include __DIR__.'/../partials/head.php';
                   </div>
                 </div>
                 </td>
-    <!--***********************Store****************************** -->
-                     <td> <label>Select Store:</label>
-		          <select class="form-group" id="id" name="store_code" required>
-                      <option value="all"
-                          <?php if (isset($_POST['store_code'])){ echo $_POST['store_code'] == 'all'  ?  'selected':''; } ?> >
-                          All Stores
-                      </option>
-                        <?php
-                        $stores = $conn->query("SELECT id, name, code FROM stores order by name") or die($conn->error);
-                        while ($row=$stores->fetch_assoc()) { ?>
-                          <option value="<?= $row['code'] ?>"
-                              <?php if (isset($_POST['store_code'])){ echo $_POST['store_code'] == $row['code']  ?  'selected':''; } ?> >
-                              <?= $row['name'] ?>
-                          </option>
-                      <?php }
-                           ?>
-                    </select>
-                    </td>
-
-
  <td>
  <input type="submit" class="btn bg-info btn-block" id="submit_search" onclick="loader()" name="search" value=" Search">
  </td>
@@ -96,8 +76,6 @@ include __DIR__.'/../partials/head.php';
                     <tr>
                       <th>Date</th>
                       <th>Doc No</th>
-                      <th>Supplier</th>
-                      <th>Store</th>
                       <th>Product</th>
                       <th>Qty</th>
                       <th>Total Amount</th>
@@ -132,8 +110,6 @@ include __DIR__.'/../partials/head.php';
                       echo "<tr>";
                         echo "<td>".$row['date']."</td>";
                         echo "<td>".$row['doc_number']."</td>";
-                        echo "<td>".$row['supplier']."</td>";
-                        echo "<td>".$row['nstore']."</td>";
                         echo "<td>".$row['product']."</td>";
                         echo "<td>".$row['qty']."</td>";
                         echo "<td>".$row['amount']."</td>";
@@ -170,8 +146,6 @@ include __DIR__.'/../partials/head.php';
                       echo "<tr>";
                       echo "<td>".$row['date']."</td>";
                       echo "<td>".$row['doc_number']."</td>";
-                      echo "<td>".$row['supplier']."</td>";
-                      echo "<td>".$row['nstore']."</td>";
                       echo "<td>".$row['product']."</td>";
                       echo "<td>".$row['qty']."</td>";
                       echo "<td>".$row['amount']."</td>";
@@ -186,7 +160,6 @@ include __DIR__.'/../partials/head.php';
                        
                    echo  "<tr>";
                     echo  " <th></th>";
-                     echo  "<th></th>";
                      echo  "<th></th>";
                      echo  "<th></th>";
                      echo  "<th></th>";

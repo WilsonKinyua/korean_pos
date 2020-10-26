@@ -4,6 +4,8 @@ include '../utils/conn.php';
 $date = date("Y-m-d H:i:s");
 $username = "";
 
+$user = $_SESSION['userId'];
+
 if (!isset($_SESSION['userId'])) {
   header('location: ../logout.php');
 }else{
@@ -276,110 +278,40 @@ if(isset($_POST['save_sale'])){
 
 
   if(isset($_POST['save_print'])){
+
+	$date               =  date('Y-m-d H:i:s');
     $doc_number = $_POST['doc_number'];
-    // $supplier = $_POST['supplier'];
-      $salesman = $_SESSION['userId'];
-    $customer = $_POST['customer_name'];
+    $salesman = $_SESSION['userId'];
     $payment_type = $_POST['payment_type'];
     $c_code = $_POST['c_code'];
     $amount = $_POST['amount'];
 
-    if (empty($customer)) {
-      $cust_err = "A customer must be selected";
-      $valid = false;
-    }
     if (empty($payment_type)) {
       $type_err = "Payment must be entered";
         $valid = false;
-    }
-    if (empty($c_code)) {
-      $type_err = "Code must be entered";
-        $valid = false;
-    }
+    }	
     if (empty($amount)) {
-      $type_err = "Amount must be entered";
+      $amt_err = "Amount must be entered";
       $valid = false;
-    }
+	}
 
-    if ($valid){
-        $sql="SELECT * FROM products WHERE id IN (";
+	foreach ($_SESSION['sales_cart'] as $key => $values) {
 
-        foreach($_SESSION['sales_cart'] as $id => $value) {
-            $sql.=$id.",";
-        }
+		$product = $values['product'];
+		$qty = $values['quantity'];
+		$price = $values['price'];
+		$line_amount = $values['quantity'] * $values['price'];
 
-        $sql=substr($sql, 0, -1).") ORDER BY name ASC";
-        $query=$conn->query($sql);
-        $totalprice = 0;
-        $price = "";
+		$conn->query("INSERT INTO `sales`(`tran_date`, `product`, `reference`, `sub_total`, `code`, `amount_paid`,`salesman_id`, `price`,`qty`) 
+                                      VALUES ('$date','$product','$doc_number','$line_amount',0,'$amount','$user','$price','$qty')") or die($conn->error);
+	}
+	
 
-        if (mysqli_num_rows($conn->query($sql)) < 1) {
-            exit("No products on the cart");
-        }
-
-
-        while($row=$query->fetch_assoc()){
-            if (isset($_GET['customer'])) {
-                $cid = $_GET['customer'];
-                $cust = $conn->query("SELECT * FROM customers INNER JOIN cust_groups ON customers.cust_group=cust_groups.id WHERE customers.id='$cid'") or die($conn->error);
-                $array = $cust->fetch_array();
-                $pricelist = $array['pricelist'];
-                if ($pricelist==0) {
-                    $subtotal = $_SESSION['sales_cart'][$row['id']]['quantity']*$row['distributor'];
-                    $totalprice += $subtotal;
-                }elseif ($pricelist == 1) {
-                    $subtotal = $_SESSION['sales_cart'][$row['id']]['quantity']*$row['stockist'];
-                    $totalprice += $subtotal;
-                }elseif ($pricelist == 2) {
-                    $subtotal = $_SESSION['sales_cart'][$row['id']]['quantity']*$row['stockist'];
-                    $totalprice += $subtotal;
-                }elseif ($pricelist == 3) {
-                    $subtotal = $_SESSION['sales_cart'][$row['id']]['quantity']*$row['wholesale'];
-                    $totalprice += $subtotal;
-                }else {
-                    $subtotal = $_SESSION['sales_cart'][$row['id']]['quantity']*$row['selling_cost'];
-                    $totalprice += $subtotal;
-                }
-            }
-            $id= $row['id'];
-            $quantity = $_SESSION['sales_cart'][$row['id']]['quantity'];
-            //Check if the product exists
-            $res = $conn->query("SELECT quantity_available FROM stock WHERE product='$id'") or die($conn->error);
-            if (mysqli_num_rows($res) > 0) {
-                // Update Stock
-                $row = $res->fetch_array();
-                if ($row['quantity_available']<$quantity) {
-                    echo '<script type="text/javascript">';
-                    echo ' alert("Product has quantity is higher than available stock")';  //not showing an alert box.
-                    echo '</script>';
-                    break;
-                }else {
-                    $qty_a = $row['quantity_available'];
-                    $qty_a -= $quantity;
-                    $conn->query("UPDATE `stock` SET `quantity_available`='$qty_a' WHERE product='$id'") or die($conn->error);
-                    $conn->query("INSERT INTO `new_sale`(`product`, `quantity`,`doc_number`, `salesman`, `date`, `sale_price`, `customer`) VALUES ('$id','$quantity','$doc_number','$salesman', '$date', '$amount', '$customer')") or die($conn->error);
-                    //
-                    $date = date('Y-m-d');
-                    $conn->query("INSERT INTO `stock_mobile`(`store_owner`, `product`, `quantity_available`,`date`) VALUES ('$salesman','$id','$quantity','$date')") or die("Error in assigning stock");
-                }
-
-            }else{
-                // $message = '<div class="bg-danger">Some products are out of stock. Please check stocks</div>';
-                // echo "<script type='text/javascript'>alert('$message');</script>";
-                echo '<script type="text/javascript">';
-                echo ' alert("Product has no inventory")';  //not showing an alert box.
-                echo '</script>';
-                break;
-            }
-        }
-        unset($_SESSION['customer'], $_SESSION['sales_cart']);
-        $_SESSION['success'] = 'The sale was successfully recorded';
+        unset($_SESSION['sales_cart']);
+        $_SESSION['success'] = 'Order(s) was created successfully';
         $_SESSION['dont_close_alert'] = $doc_number;
-        header('location:sales_create.php');
+        header("Location: sales_create.php");
         exit();
-    }
-
-    // header('location: sales_create.php');
 
     }
 ?>

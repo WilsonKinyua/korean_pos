@@ -59,6 +59,7 @@ if (isset($_GET['action']) && $_GET['action'] == "add") {
     if (mysqli_num_rows($query_s) != 0) {
       $row_s = $query_s->fetch_array();
       $_SESSION['sales_cart'][$row_s['id']] = array(
+        "product" =>$row_s['id'],
         "quantity" => 1,
         "price" => $row_s['price']
       );
@@ -153,10 +154,10 @@ include __DIR__ . '/../partials/head.php';
               }
               ?>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12 mt-5">
               <div class="card card-primary">
-                <div class="card-header">
-                  <h3 class="card-title">Make Sale</h3>
+                <div style="background-color: green;" class="card-header">
+                  <h3 class="card-title" >Make Sale</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
@@ -175,6 +176,18 @@ include __DIR__ . '/../partials/head.php';
                           <label>Receipt Number: </label>
                           <input type="text" name="doc_number" value="INV-<?php echo $docId; ?>" class="form-control" readonly>
                         </div>
+                        <div class="col-md-4">
+                        <label for="">Payment Type: </label>
+                          <select class="form-control" name="payment_type">
+                            <option value="">Select an option</option>
+                            <?php
+                            $py = $conn->query('SELECT * FROM `payment_types`') or die($conn->error);
+                            while ($row = $py->fetch_assoc()) { ?>
+                              <option value="<?= $row['id'] ?>"><?= $row['name'] ?></option>
+                            <?php }
+                            ?>
+                          </select>
+                          <span style="color: red;"><?php echo $type_err; ?></span></div>
                         <div class="col-md-4">
                           <label>Sale Date: </label>
                           <input type="date" name="sale_date" value="<?php echo date("Y-m-d"); ?>" class="form-control" readonly>
@@ -220,6 +233,7 @@ include __DIR__ . '/../partials/head.php';
                     <form method="post" action="sales_create.php?page=cart">
                       <table class="table table-bordered table-striped col-md-11" style="width: 100%; margin-left: 2em;">
                         <tr>
+                          
                           <th>Name</th>
                           <th>Quantity</th>
                           <th>Price</th>
@@ -232,24 +246,7 @@ include __DIR__ . '/../partials/head.php';
                           echo "<td colspan='5'>No products in catalog</td>";
                         } else {
                           $price = 0;
-                          if (isset($_GET['customer'])) {
-                            $cid = $_GET['customer'];
-                            $cust = $conn->query("SELECT * FROM customers INNER JOIN cust_groups ON customers.cust_group=cust_groups.id WHERE customers.id='$cid'") or die($conn->error);
-                            $array = $cust->fetch_array();
-                            $pricelist = $array['pricelist'];
-                            if ($pricelist == 1) {
-                              $price = 'wholesale';
-                            } elseif ($pricelist == 2) {
-                              $price = 'stockist';
-                            } elseif ($pricelist == 2) {
-                              $price = 'distributor';
-                            } elseif ($pricelist == 3) {
-                              $price = 'retail';
-                            } else {
-                              $price = 'retail';
-                            }
-                          }
-
+                          
                           $sql = "SELECT * FROM products WHERE id IN (";
 
                           foreach ($_SESSION['sales_cart'] as $id => $value) {
@@ -287,7 +284,7 @@ include __DIR__ . '/../partials/head.php';
                                 echo "<td>Kshs." . number_format($_SESSION['sales_cart'][$row['id']]['quantity'] * $row['price']) . "</td>";
                               }
                               ?>
-                              <td><a href="sales_create.php?page=products&action=remove&id=<?php echo $row['id'] ?>"><i class="fas fa-trash-alt"></i></a></td>
+                              <td><a href="sales_create.php?page=products&action=remove&id=<?php echo $row['id'] ?>"><i class="fas fa-trash-alt" style="color: red;"></i></a></td>
                             </tr>
                           <?php } ?>
                           <tr>
@@ -297,51 +294,29 @@ include __DIR__ . '/../partials/head.php';
                             <td>&nbsp;</td>
 
                           </tr>
-
-                          <tr>
-                            <td colspan="3"></td>
-                            <th>Discount: <span id="discount"></span></th>
-                            <td>&nbsp;</td>
-                          </tr>
                         <?php } ?>
                       </table>
 
                       <div class="row col-md-12">
                         <div class="col-md-1">
                           &nbsp;
-                        </div>
-                        <div class="col-md-3">
-                          <label for="">Payment Type: </label>
-                          <select class="form-control" name="payment_type">
-                            <option value="">Select an option</option>
-                            <?php
-                            $py = $conn->query('SELECT * FROM `payment_types`') or die($conn->error);
-                            while ($row = $py->fetch_assoc()) { ?>
-                              <option value="<?= $row['id'] ?>"><?= $row['name'] ?></option>
-                            <?php }
-                            ?>
-                          </select>
-                          <span style="color: red;"><?php echo $type_err; ?></span>
-                        </div>
-                        <div class="col-md-3">
+                        </div> 
+                        <div class="col-md-4">
                           <label for="">Confirmation Code</label>
                           <input type="text" name="c_code" value="" placeholder="Code received" class="form-control">
-                          <span style="color: red;"><?php echo $code_err; ?></span>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                           <label for="">Amount Paid</label>
                           <input type="text" name="amount" value="" class="form-control" placeholder="Amount paid in KES e.g. 20000">
-                          <span style="color: red;"><?php echo $amt_err; ?></span>
                         </div>
                       </div>
                       <div class="row col-md-12">&nbsp;</div>
 
-                      <center><button type="submit" name="update_cart" class="btn btn-primary btn-lg" style="margin-left: 4em;">Update Catalog</button></center>
+                      <center><button type="submit" name="update_cart" class="btn btn-info btn-lg" style="margin-left: 4em;">Update Catalog</button></center>
                     </form>
 
-                    <button type="submit" name="clear_cart" class="btn btn-primary" style="margin-left: 2em;">Clear</button>
-                    <button type="submit" name="save_sale" class="btn btn-primary" style="margin-left: 2em;">Save Sale</button>
-                    <button type="submit" name="save_print" class="btn btn-primary btn-lg" style="margin-left: 2em;">Print</button>
+                    <button type="submit" name="clear_cart" class="btn btn-info" style="margin-left: 2em;">Clear</button>
+                    <button type="submit" name="save_print" class="btn btn-info btn-lg" style="margin-left: 2em;">Print Receipt</button>
 
 
                   </div>

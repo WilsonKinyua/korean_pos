@@ -167,23 +167,6 @@
                             <?php } ?>
                         </ul>
 					 <?php if (!($row["adjust_stock"] == 0)){ ?>
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-database"></i>
-                            <p>
-                                Inventory
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="../adjustments/list.php" class="nav-link">
-                                   <i class="fas fa-plus-circle nav-icon"></i>
-                                    <p>Adjust Inventory</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                 <?php } }?>
 
               

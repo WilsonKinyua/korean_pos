@@ -1,25 +1,19 @@
 <?php
 session_start();
 include '../utils/conn.php';
+
 if (!isset($_GET['sale_id']) || empty($_GET['sale_id'])){
     header("Location: sales_create.php");
 }
-$purchaseId = $_GET['sale_id'];
-$res = $conn->query("SELECT ns.*, c.cust_name, c.cust_contact, users.name as saleman FROM new_sale as ns 
-    LEFT JOIN users on ns.salesman=users.id
-    LEFT JOIN customers as c ON ns.customer = c.id where ns.doc_number='$purchaseId'") or die($conn->error);
-if ($res->num_rows < 1){
-    $_SESSION['error'] = 'The sale does not exists';
-    header("Location: sales_create.php");
-    exit();
-}
+$invoiceId = $_GET['sale_id'];
+
+$res = $conn->query("SELECT sales.*, products.item_name as name FROM sales LEFT JOIN products ON sales.product = products.id where sales.reference='$invoiceId' ");
 
 
-$productsSold = $conn->query("SELECT ns.*, products.*,products.name as product_name  FROM new_sale as ns 
-    LEFT JOIN products on ns.product = products.id
-    where ns.doc_number='$purchaseId'") or die($conn->error);
 
-$purchase = $res->fetch_assoc();
+$productsPurchased = $conn->query("SELECT sales.*, products.item_name as name FROM sales LEFT JOIN products ON sales.product = products.id where sales.reference='$invoiceId' ") or die($conn->error);
+
+$invoice = $res->fetch_assoc();
 ?>
 
 <!doctype html>
@@ -43,39 +37,42 @@ $purchase = $res->fetch_assoc();
                 <table>
                     <tr>
                         <td class="title">
-                            <span class="t-invoice"><img src="../../dist/img/favicon.png" style=" width:70px; height: 70px;"></span>
+                            <span class="t-invoice"></span>
                         </td>
 
                         <td>
                             <span class="t-invoice"></span>
-                            <span class="invoice-id"><?= $purchase['doc_number'] ?></span>
+                            <span class="invoice-id"> RECEIPT NUMBER <br><?= $invoice['reference'] ?></span>
                             <br>
                             <span class="t-invoice-created">Created</span>:
-                            <span class="invoice-created"><?= date('Y M d', strtotime($purchase['date'])) ?></span>
+                            <span class="invoice-created"><?= date('m/d/Y', strtotime($invoice['tran_date'])) ?></span>
+                            <br>
+                           
                         </td>
                     </tr>
                 </table>
             </td>
         </tr>
 
-        <tr class="information">
+        <tr class="information" >
             <td colspan="2">
                 <table>
                     <tr>
-                        <td class="information-company">
-                            <span class="t-invoice-from">Purchsed From</span><br>
-                            <span id="company-name">Gemad Agencies Ltd</span><br>
-                            <!--                            <span id="company-address"></span><br>-->
-                            <span id="company-town">Nairobi</span><br>
-                            <span id="company-country">Kenya</span><br>
+                        <td class="information-company" style="font-weight:900; font-size:15px; text-transform:uppercase;">
+                            <span class="t-invoice-from">ORDER FROM</span><br>
+                            <span id="company-name"> Korean Kenya Solar</span><br>
+<!--                            <span id="company-address"></span><br>-->
+                            <span id="company-town">Kaunda Street, QueensWay House </span><br>
+                            <span id="company-country">Nairobi Kenya</span><br>
                         </td>
 
-                        <td class="information-client">
-                            <span class="t-invoice-to">Sold To</span><br>
-                            <span id="client-name"><?= $purchase['cust_name'] ?></span><br>
-                            <span id="client-address"><?= $purchase['cust_contact'] ?></span><br>
-                            <span id="company-country">Kenya</span><br>
+                        <td class="information-client" style="font-weight:900; font-size:15px; text-transform:uppercase;">
+                            <span class="t-invoice-to">CREATED BY</span><br>
+                            <span id="company-name">Korean Kenya Solar</span><br>
+                            <span id="company-town">Kaunda Street, QueensWay House </span><br>
+                            <span id="company-country">Nairobi Kenya</span><br>
                         </td>
+
                     </tr>
                 </table>
             </td>
@@ -83,48 +80,32 @@ $purchase = $res->fetch_assoc();
     </table>
 
 
-    <table class="invoice-items" cellpadding="0" cellspacing="0">
+
+    <table class="invoice-items " cellpadding="0" cellspacing="0">
         <tr class="heading">
             <td style="width: 33%; text-align: center;"><span class="t-item">Product</span></td>
-            <td style="width: 33%; text-align: center;"><span class="t-item">Quantity</span></td>
-            <td style="width: 33%; text-align: center;"><span class="t-price">Subtotal</span></td>
+            <td style="width: 15%; text-align: center;"><span class="t-item">Quantity</span></td>
+            <td style="width: 33%; text-align: center;"><span class="t-item">Price</span></td>
+            <td style="width: 33%; text-align: center;"><span class="t-item">SubTotal</span></td>
         </tr>
         <?php
-        foreach ($productsSold as $product){
-            $cid = $purchase['customer'];
-            $cust = $conn->query("SELECT * FROM customers INNER JOIN cust_groups ON customers.cust_group=cust_groups.id WHERE customers.id='$cid'") or die($conn->error);
-            $array = $cust->fetch_array();
-            $price = 0;
-            $pricelist = $array['pricelist'];
-            if ($pricelist==0) {
-                $price = $product['distributor'];
-            }elseif ($pricelist == 1) {
-                $price = $product['stockist'];
-            }elseif ($pricelist == 2) {
-                $price = $product['stockist'];
-            }elseif ($pricelist == 3) {
-                $price = $product['wholesale'];
-            }else {
-                $price = $product['retail'];
-            }
+        $total=0;
+        foreach ($productsPurchased as $product){
+            $total += $product['sub_total']
             ?>
+        
             <tr class="details">
-                <td style="width: 33%; text-align: center;"><span class="t-item"><?= $product['product_name'] ?></span></td>
-                <td style="width: 33%; text-align: center;"><span class="t-item"><?= $product['quantity'] ?></span></td>
-                <td style="width: 33%; text-align: center;"><span class="t-price"><?= $price ?></span></td>
+                <td style="width: 33%; text-align: center;"><span class="t-item"><?= $product['name'] ?></span></td>
+                <td style="width: 15%; text-align: center;"><span class="t-item"><?= $product['qty'] ?></span></td>
+                <td style="width: 33%; text-align: center;"><span class="t-item"><?= $product['price'] ?></span></td>
+                <td style="width: 33%; text-align: center;"><span class="t-item"><?= ($product['price'] * $product['qty']) ?></span></td>
             </tr>
         <?php }
         ?>
     </table>
-
+<hr>
     <div class="invoice-summary">
-        <div class="invoice-total">Paid Amount: <?= $purchase['sale_price'] ?></div>
-        <div class="invoice-final"></div>
-        <div class="invoice-exchange"></div>
-    </div>
-
-    <div class="footer">
-        <p>Served by <?= $purchase["saleman"] ?></p>
+        <div class="invoice-final" style="font-weight: 900; font-size:15px; margin-right:80px">Total Amount: <?php echo number_format($total,2); ?></div>
     </div>
 </div>
 <!-- Dependencies -->

@@ -2,7 +2,7 @@
 if (!isset($_SESSION['group'])) {
   header('location: ../utils/logout.php');
 }else{
-  $username = $_SESSION['username'];
+  $username = $_SESSION['userId'];
   $group = $_SESSION['group'];
 }
  ?>

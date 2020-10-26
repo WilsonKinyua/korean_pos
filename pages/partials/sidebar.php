@@ -161,6 +161,12 @@
                                         <p>Create Sale</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="../sales/sales_list.php" class="nav-link">
+                                        <i class="fas fa-list nav-icon"></i>
+                                        <p>List Sale</p>
+                                    </a>
+                                </li>
                             <?php } if (!($row["clear_sales"] == 0)){ ?>
                             <?php } if (!($row["clear_sales"] == 0)){ ?>
  							
@@ -171,90 +177,9 @@
 
               
                 <?php  if (!($row["settings"] == 0)){?>
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-cog"></i>
-                            <p>
-                                Settings
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="../settings/pay_terms.php" class="nav-link">
-                                    <i class="fas fa-file nav-icon"></i>
-                                    <p>Pay Terms</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                
                 <?php } }?>
                 <!--*******************REPORTS Side Nav *****************************-->
-
-                <?php if (!($row["reports"] == 0 )){?>
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fa fas fa-chart-bar"></i>
-                        <p>
-                            Reports
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">					
-                    <?php if (!($row["sales_reports"] == 0 )) { ?>
-						<?php } if (!($row["sales_reports"] == 0 )) { ?>
-                        <li class="nav-item">
-                            <a href="../reports/salessummary.php" class="nav-link">
-                                <i class="fa fas fa-hand-holding-usd nav-icon"></i>
-                                <p>Sales Summary</p>
-                            </a>
-                        </li>
-						  <?php } if (!($row["sales_reports"] == 0 )) { ?>
-                            <li class="nav-item">
-                                <a href="../reports/dailysalessummary.php" class="nav-link">
-                                    <i class="fa fas fa-file-invoice-dollar nav-icon "></i>
-                                    <p>Daily Sales Summary</p>
-                                </a>
-                            </li>
-                        <?php } if (!($row["sales_reports"] == 0 )) { ?>
-                            <li class="nav-item">
-                                <a href="../reports/salesdetail.php" class="nav-link">
-                                    <i class="fas fa-search-dollar nav-icon"></i>
-                                    <p>Sales Detail</p>
-                                </a>
-                            </li>       
-                        <?php } if (!($row["sales_reports"] == 0 )) { ?>
-                            <li class="nav-item">
-                                <a href="../reports/itemsale.php" class="nav-link">
-                                    <i class="fa fas fa-tags nav-icon "></i>
-                                    <p>Item Sales</p>
-                                </a>
-                            </li>
- 
-                        <?php } if (!($row["sales_reports"] == 0 )) { ?>
-                        <?php } if (!($row["sales_reports"] == 0 )) { ?>
-                        <?php } if (!($row["transfer_reports"] == 0 )) { ?>
-
-                        <?php } if (!($row["transfer_reports"] == 0 )) { ?>
-                        <li class="nav-item">
-                            <a href="../reports/purchasedet.php" class="nav-link">
-                                <i class="fa fas fa-truck nav-icon "></i>
-                                <p>Purchase Detail</p>
-                            </a>
-                        </li>
-
-                        <?php } if (!($row["transfer_reports"] == 0 )) { ?>
-
-                        <?php } if (!($row["transfer_reports"] == 0 )) { ?>
-
-                         <?php } if (!($row["transfer_reports"] == 0 )) { ?>
-
-                        <?php } if (!($row["transfer_reports"] == 0 )) { ?>
-						 <?php }?>
-                    </ul>
-				</li>	
-          <?php } ?>
-
                     <!--**************************************************************** -->
                 <li class="nav-item">
                     <a href="../utils/logout.php" class="nav-link">
